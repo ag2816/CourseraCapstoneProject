@@ -1,5 +1,7 @@
 <h1>Where the pets are?</h1>
 
+Note: an html version of the notebook for this project can be found here: https://ag2816.github.io/3.%20Capstone_Final_Project_Pet_Store_In_Toronto.html
+
 <h2>1. Introduction</h2>
 
 Problem: A client wants to open a pet store in Toronto and has asked for advice about where it should be located.
