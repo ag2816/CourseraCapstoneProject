@@ -1,0 +1,13 @@
+Problem: A client wants to open a pet store in Toronto and has asked for advice about where it should be located.
+
+Ideally we want to target an area that appears to be underserved currently by pet stores/services.  
+To do this analysis, we will use the following information:
+* the number of pets in each area in Toronto (using Forward Sortatation Areas (FSAs)) (estimated by the number of new dog/cat licenses issued per FSA)
+* the neighbourhood name of each FSA (retrieved from Wikipedia)
+* the popyulation of each each FSA from the 2016 census
+* the foursquare api to retrieve the current number of pet stores/services per FSA
+
+Using the above information, we will
+* cluster neighborhoods to find areas with a relatively high number of pet licenses and low number of stores -- therefore possible candidates for a new pet store
+* compare pet licenses from 2013 to 2017 to get an idea of which FSAs are showing a growth in pets -- and which are therefore also possible candidates for a new pet store
+* look at the proportion of pets/population in each FSA
