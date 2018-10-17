@@ -44,7 +44,7 @@ geopy:
 Wikipedia: https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M
 * to get neighbourhood names for each FSA 
 
-3. Methodology
+<h2>3. Methodology</h2>
 
 Overview of clean up, EDA and machine learning processes used:
 
