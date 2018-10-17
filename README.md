@@ -10,18 +10,19 @@ Ideally we want to target an area that appears to be underserved currently by pe
 To do this analysis, we will use the following information:
 * the number of pets in each area in Toronto (using Forward Sortatation Areas (FSAs)) (estimated by the number of new dog/cat licenses issued per FSA)
 * the neighbourhood name of each FSA (retrieved from Wikipedia)
-* the popyulation of each each FSA from the 2016 census
+* the population of each each FSA from the 2016 census
 * the foursquare api to retrieve the current number of pet stores/services per FSA
 
 Using the above information, we will
 * cluster neighborhoods to find areas with a relatively high number of pet licenses and low number of stores -- therefore possible candidates for a new pet store
 * compare pet licenses from 2013 to 2017 to get an idea of which FSAs are showing a growth in pets -- and which are therefore also possible candidates for a new pet store
-* look at the proportion of pets/population in each FSA
+
 
 <h2>2. Data Sources</h2>
 
-Data used in this project
+<h3>Data used in this project</h3>
 ---------------------------------
+
 Population by FSA from Census 2016: https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/pd-pl/comprehensive.cfm
  * this information will be used to calculate the proportion of pet ownership per FSA
  * this data set has 3 columns of interest: FSA / Province / Population, 2016
@@ -50,13 +51,13 @@ Wikipedia: https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M
 
 Overview of clean up, EDA and machine learning processes used:
 
-Data Clean up:
+<h3>Data Clean up:</h3>
 --------------
 * check Datatypes and convert any fields that are string to float (i.e. the Dog and Total counts from the Toronto pet licensing data set were imported as object/string but need to be converted to float)
 * check for and drop null/na rows
 * dropped all the extraneous columns from the Population / Census data set except for the FSA and Population in 2016
 
-Retrieval of Neighbourhood names
+<h3>Retrieval of Neighbourhood names</h3>
 ---------------------------------
 * the Toronto Pet Licensing data came organized by FSA but assigned no names to those areas.  To get that information, 
 I used Beautiful Soup to scrape the Wikipedia page (https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M)
@@ -66,17 +67,17 @@ with all the included neighborhood names.  So I looped through the rows in the h
    * no: start a new row
 * when merging the various datasets together, I merged on FSA and again dropped any null rows
 
-Retrieval of Latitude/Longitude for each FSA
+<h3>Retrieval of Latitude/Longitude for each FSA</h3>
 --------------------------------------------
 * used GeoPy to retrieve lat/long for each FSA
 
-Check for Outliers
+<h3>Check for Outliers</h3>
 ------------------
 * I found one outlier in the dataset, which was FSA=M5W that had a population of only 15 people.  This is significantly lower than 
    the population of any other FSA (the next lowest had a population of 2000) and would skew the results.  So I dropped this row
    
    
-Exploratory Data Analysis
+<h3>Exploratory Data Analysis</h3>
 --------------------------
 * In the EDA, I calculated and added a number of new columns:
    PropTotal_2017: proportion of the licenese granted in Toronto in 2017 that were granted to this FSA
@@ -90,7 +91,7 @@ Exploratory Data Analysis
 * I produced a number of Choropleth diagrams showing the above data (comparing licenses issued across the FSAs in 2017, changes
 in license counts between 2013 and 2017 and per capita pets)
 
-Retrieval of FourSquare data
+<h3>Retrieval of FourSquare data</h3>
 ----------------------------
 * After retrieving the FourSquare data on pet servivces/stores, I did a check to see how many pet stores were being counted as
 belonging to more than one FSA.  I found that there were some stores  being counted twice, but decided that it doesn't matter for the
@@ -100,8 +101,8 @@ FSAs and that's what we care about here.
 to take special steps to preserve those data points and merge them back in later
 
 
-Machine Learning
----------------
+<h3>Machine Learning / Cluster Analysis</h3>
+--------------------------------------------
 For this analysis, I used the KMeans algorithm to attempt to cluster FSA areas based on three factors:
 * Population
 * Total Pets registered in 2017
@@ -118,6 +119,7 @@ that adding more clusters doesn't dramatically reduce the error any further.  I 
 
 <h2>4. Results</h2>
 
+<h3>Preliminary findings (before clustering)</h3>
 Pet Ownership in Toronto 2017:
 * Largest # Licenses issued to areas that are outside downtown core: East York (M4C) and Etobicoke (M8V) rank highest
 * Lowest # of Licenses issued to areas in the downtown core: M5C, M5H and M5W rank lowest
@@ -136,9 +138,9 @@ Pet Capita Pet Licensing (2017):
     * Parkdale/ Roncesvalles (M6R) 
     * Alderwood/Long Branch(M8W)
 
-Candidates for a new pet store/service
+<h3>Clustering results</h3>
 ---------------------------------------
-Identified 2 clusters that appear like good candidates for opening a new Pet Store:
+Running the KMeans Algorthim helped me find 2 clusters that appear to be good candidates for opening a new Pet Store:
 * these areas have 
     * Low services per capita pet
     * High number of licensed pets in 2017
@@ -156,7 +158,7 @@ Identified 2 clusters that appear like good candidates for opening a new Pet Sto
 
 <h2>5. Discussion</h2>
 
-Caveats
+<h3>Caveats</h3>
 -------
 Since we don't have a way to accurately measure actual numbers of pets living in Toronto, I'm using newly issued licenses as a proxy. 
 But this may not be a perfect measure since 
@@ -164,7 +166,7 @@ But this may not be a perfect measure since
 2) not all pet types are registered (i.e. there could be a cluster of rabbits living in one FSA that we have no idea about!) 
 3) we're really only looking at licenses issued in 2017 which doesn't cover pets registered in the past 10–20 years
 
-Recommendations
+<h3>Recommendations</h3>
 ---------------
 My recommendation would be to target the FSAs located in Clusters 1 and 4 when looking for a location to open a new pet service/store
 These areas have 
@@ -174,14 +176,15 @@ These areas have
  
     
 Within these clusters, 5 FSAs jump out as particularly ideal for our purposes
-   cluster 4: 
+<ul><li>cluster 4: 
       M2J (Fairview, Henry Farm, Oriole) (north west of city)
       M9V (Albion Gardens, Beaumond Heights, Humbergate, Jamestown, Mount Olive, Silverstone, South Steeles, Thistletown) (North east of city)
       M1W (L'Amoreaux West, Steeles West) (north west of city)
       M6M (Del Ray, Keelsdale, Mount Dennis, Silverthorn) (East end of city)
-   cluster 1: 
+ </li><li>cluster 1: 
       M6E (Caledonia-Fairbank) (East end of city)
       M9B (Cloverdale, Islington, Martin Grove, Princess Gardens, West Deane Park) (East end of city)
+ </li></ul>
 
 Of these, only M2J shows an increase in pets over last 5 years and may be particularly worth a closer look
 
