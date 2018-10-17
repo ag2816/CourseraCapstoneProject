@@ -1,6 +1,6 @@
-Where the pets are?
+<h1>Where the pets are?</h1>
 
-1. Introduction
+<h2>1. Introduction</h2>
 
 Problem: A client wants to open a pet store in Toronto and has asked for advice about where it should be located.
 
@@ -16,7 +16,7 @@ Using the above information, we will
 * compare pet licenses from 2013 to 2017 to get an idea of which FSAs are showing a growth in pets -- and which are therefore also possible candidates for a new pet store
 * look at the proportion of pets/population in each FSA
 
-2. Data Sources
+<h2>2. Data Sources</h2>
 
 Data used in this project
 ---------------------------------
@@ -114,7 +114,7 @@ standard deviations from the mean
 To find the appropriate number of clusters, I used the visual Elbow method to find the point at which the score levels off -- meaning 
 that adding more clusters doesn't dramatically reduce the error any further.  I found that 7 clusters looked to be correct for this data
 
-4. Results
+<h2>4. Results</h2>
 
 Pet Ownership in Toronto 2017:
 * Largest # Licenses issued to areas that are outside downtown core: East York (M4C) and Etobicoke (M8V) rank highest
@@ -152,7 +152,7 @@ Identified 2 clusters that appear like good candidates for opening a new Pet Sto
       M6E (Caledonia-Fairbank) (East end of city)
       M9B (Cloverdale, Islington, Martin Grove, Princess Gardens, West Deane Park) (East end of city)
 
-5. Discussion
+<h2>5. Discussion</h2>
 
 Caveats
 -------
@@ -183,7 +183,7 @@ Within these clusters, 5 FSAs jump out as particularly ideal for our purposes
 
 Of these, only M2J shows an increase in pets over last 5 years and may be particularly worth a closer look
 
-6. Conclusions
+<h2>6. Conclusions</h2>
 
 In this project, I wanted to identify areas in Toronto that might be good candidates for opening a new pet store.  I pulled together
 information from a variety of sources - downloading csvs from Open Data portals, calling apis and scraping a website.  Compiling all 
