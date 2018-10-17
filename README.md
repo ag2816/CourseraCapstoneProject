@@ -21,7 +21,6 @@ Using the above information, we will
 <h2>2. Data Sources</h2>
 
 <h3>Data used in this project</h3>
----------------------------------
 
 Population by FSA from Census 2016: https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/pd-pl/comprehensive.cfm
  * this information will be used to calculate the proportion of pet ownership per FSA
@@ -52,13 +51,13 @@ Wikipedia: https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M
 Overview of clean up, EDA and machine learning processes used:
 
 <h3>Data Clean up:</h3>
---------------
+
 * check Datatypes and convert any fields that are string to float (i.e. the Dog and Total counts from the Toronto pet licensing data set were imported as object/string but need to be converted to float)
 * check for and drop null/na rows
 * dropped all the extraneous columns from the Population / Census data set except for the FSA and Population in 2016
 
 <h3>Retrieval of Neighbourhood names</h3>
----------------------------------
+
 * the Toronto Pet Licensing data came organized by FSA but assigned no names to those areas.  To get that information, 
 I used Beautiful Soup to scrape the Wikipedia page (https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M)
 * the Wikipedia page has many rows for each FSA (Since many of them span multiple neighbourhoods) and I wanted to have one row per FSA
@@ -68,17 +67,17 @@ with all the included neighborhood names.  So I looped through the rows in the h
 * when merging the various datasets together, I merged on FSA and again dropped any null rows
 
 <h3>Retrieval of Latitude/Longitude for each FSA</h3>
---------------------------------------------
+
 * used GeoPy to retrieve lat/long for each FSA
 
 <h3>Check for Outliers</h3>
-------------------
+
 * I found one outlier in the dataset, which was FSA=M5W that had a population of only 15 people.  This is significantly lower than 
    the population of any other FSA (the next lowest had a population of 2000) and would skew the results.  So I dropped this row
    
    
 <h3>Exploratory Data Analysis</h3>
---------------------------
+
 * In the EDA, I calculated and added a number of new columns:
    PropTotal_2017: proportion of the licenese granted in Toronto in 2017 that were granted to this FSA
    PropDogs: of the licenses granted in this FSA, what percentage were granted for Dogs vs Cats?
@@ -92,7 +91,7 @@ with all the included neighborhood names.  So I looped through the rows in the h
 in license counts between 2013 and 2017 and per capita pets)
 
 <h3>Retrieval of FourSquare data</h3>
-----------------------------
+
 * After retrieving the FourSquare data on pet servivces/stores, I did a check to see how many pet stores were being counted as
 belonging to more than one FSA.  I found that there were some stores  being counted twice, but decided that it doesn't matter for the
 purposes of this analysis.  If a store is within a 1000m of more than 1 FSA, then it's still local and usable by people in those
@@ -102,7 +101,7 @@ to take special steps to preserve those data points and merge them back in later
 
 
 <h3>Machine Learning / Cluster Analysis</h3>
---------------------------------------------
+
 For this analysis, I used the KMeans algorithm to attempt to cluster FSA areas based on three factors:
 * Population
 * Total Pets registered in 2017
@@ -139,7 +138,7 @@ Pet Capita Pet Licensing (2017):
     * Alderwood/Long Branch(M8W)
 
 <h3>Clustering results</h3>
----------------------------------------
+
 Running the KMeans Algorthim helped me find 2 clusters that appear to be good candidates for opening a new Pet Store:
 * these areas have 
     * Low services per capita pet
@@ -159,7 +158,7 @@ Running the KMeans Algorthim helped me find 2 clusters that appear to be good ca
 <h2>5. Discussion</h2>
 
 <h3>Caveats</h3>
--------
+
 Since we don't have a way to accurately measure actual numbers of pets living in Toronto, I'm using newly issued licenses as a proxy. 
 But this may not be a perfect measure since 
 1) not every owner registers their pet 
@@ -167,7 +166,7 @@ But this may not be a perfect measure since
 3) we're really only looking at licenses issued in 2017 which doesn't cover pets registered in the past 10–20 years
 
 <h3>Recommendations</h3>
----------------
+
 My recommendation would be to target the FSAs located in Clusters 1 and 4 when looking for a location to open a new pet service/store
 These areas have 
     * Low number of existing services/venues
